@@ -1,4 +1,5 @@
 import '../../assets/css/dialog.css';
+import { Cert } from '../cert/cert';
 
 interface TPropsDialog {
   onClose: () => void
@@ -12,6 +13,7 @@ export const Dialog = ({ onClose }: TPropsDialog) => {
         <div className="dialog__header">
           Información del Firmante
         </div>
+        
         <div className="dialog__body">
           <div className="dialog__group">
             <label>Motivo</label>
@@ -34,6 +36,11 @@ export const Dialog = ({ onClose }: TPropsDialog) => {
             />
           </div>
         </div>
+
+        <div className="dialog__cert">
+          <Cert/>
+        </div>
+
         <div className="dialog__footer">
           <button onClick={onClose}
             className='dialog__button red'

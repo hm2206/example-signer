@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo, FunctionComponent } from 'react';
 import * as pdfjsLib from "pdfjs-dist";
 import * as pdfjsWorkerEntry from "pdfjs-dist/build/pdf.worker.entry";
 import { ButtonViewer } from './button-viewer';

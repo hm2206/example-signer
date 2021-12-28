@@ -9,7 +9,7 @@
 }
 
 .dialog__card {
-  width: 47%;
+  width: 45%;
   height: auto;
   background: #fff;
   margin: auto;
@@ -22,6 +22,10 @@
   font-size: 13px;
   font-weight: bolder;
   text-align: center;
+}
+
+.dialog__cert {
+  padding: 0.5em 1em;
 }
 
 .dialog__body {
@@ -73,6 +77,12 @@
   color: #2196f3;
   border: 1px solid #2196f3;
   font-weight: bold;
+}
+
+@media (min-width: 1300px) {
+  .dialog__card {
+    width: 30%;
+  }
 }
 
 @media (max-width: 1010px) {
