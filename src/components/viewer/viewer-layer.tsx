@@ -3,6 +3,7 @@ import * as pdfjsLib from "pdfjs-dist";
 import * as pdfjsWorkerEntry from "pdfjs-dist/build/pdf.worker.entry";
 import { ButtonViewer } from './button-viewer';
 import { Widget } from '../widget/widget';
+import { HeaderLayer } from './header-layer';
 
 interface TPropsViewerLayer {
   url: string
@@ -19,6 +20,7 @@ export const ViewerLayer = ({ url }: TPropsViewerLayer) => {
 
   const [pdfRef, setPdfRef] = useState<any>();
   const [currentPage, setCurrentPage] = useState<number>(1);
+
   const [currentViewport, setCurrentViewport] = useState<TViewport>({
     width: 595,
     height: 842
@@ -50,7 +52,7 @@ export const ViewerLayer = ({ url }: TPropsViewerLayer) => {
       setPdfRef(loadedPdf);
     }).catch(err => console.log(err));
   }
-
+  
   useEffect(() => {
     if (pdfRef) renderPage(currentPage, pdfRef);
   }, [pdfRef, currentPage, renderPage]);
@@ -65,9 +67,10 @@ export const ViewerLayer = ({ url }: TPropsViewerLayer) => {
 
   return (
     <div className='viewer__content'>
-      <div className='viewer__header'>
-        titulo
-      </div>
+      <HeaderLayer
+        total={total}
+        onPage={(value: number) => setCurrentPage(value)}
+      />
       <div className='viewer__body'>
         <ButtonViewer type='left'
           onClick={prevPage}
@@ -77,9 +80,9 @@ export const ViewerLayer = ({ url }: TPropsViewerLayer) => {
             width={currentViewport?.width}
             height={currentViewport?.height}
           />
-          <Widget
-            width={currentViewport?.width}
-            height={currentViewport?.height}
+          <Widget 
+            width={currentViewport?.width || 0}
+            height={currentViewport?.height || 0}
           />
         </div>
         <ButtonViewer type='right'

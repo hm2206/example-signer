@@ -1,0 +1,25 @@
+.header__content {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  color: #fff;
+  padding: 0.2em;
+}
+
+.header__search {
+  width: 30px;
+  background: transparent;
+  border: 0px;
+  color: #fff;
+  font-size: 15px;
+  text-align: right;
+}
+
+.header__search:focus {
+  outline: none;
+}
+
+.header__button {
+  background: #fff;
+  border: 0px;
+}

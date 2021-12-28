@@ -4,19 +4,21 @@
   box-sizing: border-box;
 }
 
+.cursor__pointer {
+  cursor: pointer;
+}
+
 .viewer__content {
   box-sizing: content-box;
   width: auto;
   min-height: auto;
-  background: #455a64;
-  padding: 0.5em 1.5em;
+  background: #37474f;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .viewer__header {
-  position: absolute;
-  top: 0px;
-  left: 0px;
   background-color: #263238;
   width: 100%;
   height: auto;
@@ -26,11 +28,11 @@
 
 .viewer__body {
   width: 100%;
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
+  box-sizing: border-box;
   position: relative;
   display: flex;
   justify-content: center;
+  padding: 1em;
 }
 
 .layer {

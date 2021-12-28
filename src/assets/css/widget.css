@@ -1,5 +1,46 @@
 .widget__content {
+  position: relative;
+  height: auto;
+  width: auto;
+}
+
+.widget__canvas {
   position: absolute;
   left: 0px;
   top: 0px;
+}
+
+.widget__button {
+  border-radius: 50%;
+  border: 0px;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  margin: auto;
+  background-color: #e3f2fd;
+  border: 1px solid #2196f3;
+  cursor: pointer;
+}
+
+.widget__button.red {
+  background: #f8bbd0;
+  border-color: #e91e63;
+}
+
+.widget__icon {
+  color: #2196f3;
+  width: 15px;
+  height: 15px;
+  margin-top: 0.29em;
+  margin-left: 0.11em;
+}
+
+.widget__icon.red {
+  color: #e91e63;
+}
+
+.widget__button.signer {
+  bottom: 50px;
 }

@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface IRectangle {
   x: number
@@ -11,7 +11,7 @@ interface IPropsWidget {
   current: any
 }
 
-export const useWidget = (canvas: IPropsWidget) => {
+export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
 
   const boxes: IRectangle[] = [
     { x: 10, y: 10, w: 150, h: 70 },
@@ -30,21 +30,26 @@ export const useWidget = (canvas: IPropsWidget) => {
 
   // draw rectangle
   const draw = () => {
+    clear();
+    if (!active) return; 
+    boxes.map(info => drawFillRect(info));
+  }
+
+  // clear draw
+  const clear = () => {
     const ctx = canvas.current.getContext('2d');
     ctx.clearRect(0, 0,
       canvas.current.clientWidth,
       canvas.current.clientHeight
     );
-
-    boxes.map(info => drawFillRect(info));
   }
 
   // draw rectangle with background
   const drawFillRect = (info: IRectangle) => {
     const { x, y, w, h } = info;
-    const backgroundColor = '#bbdefb';
+    const backgroundColor = '#4fc3f7';
     const ctx = canvas.current.getContext('2d');
-
+    // dibujar
     ctx.beginPath();
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(x, y, w, h);
@@ -85,7 +90,7 @@ export const useWidget = (canvas: IPropsWidget) => {
     draw();
   }
 
-  const handleMouseUp = (e: any) => {
+  const handleMouseUp = (e: any) => { 
     dragTarget = null;
     isDown = false;
   }
@@ -100,6 +105,7 @@ export const useWidget = (canvas: IPropsWidget) => {
 
   return {
     draw,
+    clear,
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
