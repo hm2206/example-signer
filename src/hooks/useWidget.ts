@@ -47,7 +47,7 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
   // draw rectangle with background
   const drawFillRect = (info: IRectangle) => {
     const { x, y, w, h } = info;
-    const backgroundColor = '#4fc3f7';
+    const backgroundColor = 'rgba(79, 195, 247, 0.7)';
     const ctx = canvas.current.getContext('2d');
     // dibujar
     ctx.beginPath();

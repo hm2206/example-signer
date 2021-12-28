@@ -3,11 +3,12 @@ import '../../assets/css/header.css';
 import { X } from 'react-feather';
 
 interface TPropsHeaderLayer {
-  onPage(value: number): void
   total: number
+  onPage(value: number): void
+  onClose?: () => void
 }
 
-export const HeaderLayer = ({ onPage, total }: TPropsHeaderLayer) => {
+export const HeaderLayer = ({ onPage, onClose, total }: TPropsHeaderLayer) => {
   
   const [currentPage, setCurrentPage] = useState<number | null>();
 
@@ -36,7 +37,9 @@ export const HeaderLayer = ({ onPage, total }: TPropsHeaderLayer) => {
           /> / {total}
         </div>
         <div className="header__right">
-          <X className='cursor__pointer'/>
+          <X className='cursor__pointer'
+            onClick={onClose}
+          />
         </div>
       </div>
     </div>

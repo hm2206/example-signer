@@ -7,6 +7,7 @@ import { HeaderLayer } from './header-layer';
 
 interface TPropsViewerLayer {
   url: string
+  onClose?: () => void
 }
 
 interface TViewport {
@@ -14,7 +15,7 @@ interface TViewport {
   width: number
 }
 
-export const ViewerLayer = ({ url }: TPropsViewerLayer) => {
+export const ViewerLayer = ({ url, onClose }: TPropsViewerLayer) => {
   const canvasRef: any = useRef();
   pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerEntry;
 
@@ -66,32 +67,35 @@ export const ViewerLayer = ({ url }: TPropsViewerLayer) => {
   const prevPage = () => currentPage > 1 && setCurrentPage(currentPage - 1);
 
   return (
-    <div className='viewer__content'>
-      <HeaderLayer
-        total={total}
-        onPage={(value: number) => setCurrentPage(value)}
-      />
-      <div className='viewer__body'>
-        <ButtonViewer type='left'
-          onClick={prevPage}
+    <>
+      <div className='viewer__content'>
+        <HeaderLayer
+          onClose={onClose}
+          total={total}
+          onPage={(value: number) => setCurrentPage(value)}
         />
-        <div className='layer'>
-          <canvas ref={canvasRef}
-            width={currentViewport?.width}
-            height={currentViewport?.height}
+        <div className='viewer__body'>
+          <ButtonViewer type='left'
+            onClick={prevPage}
           />
-          <Widget 
-            width={currentViewport?.width || 0}
-            height={currentViewport?.height || 0}
+          <div className='layer'>
+            <canvas ref={canvasRef}
+              width={currentViewport?.width}
+              height={currentViewport?.height}
+            />
+            <Widget 
+              width={currentViewport?.width || 0}
+              height={currentViewport?.height || 0}
+            />
+          </div>
+          <ButtonViewer type='right'
+            onClick={nextPage}
           />
         </div>
-        <ButtonViewer type='right'
-          onClick={nextPage}
-        />
+        <div className="viewer__footer">
+          {currentPage} / {total}
+        </div>
       </div>
-      <div className="viewer__footer">
-        {currentPage} / {total}
-      </div>
-    </div>
+    </>
   );
 }

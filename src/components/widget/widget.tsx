@@ -2,6 +2,7 @@ import { memo, useEffect, useRef, useState } from 'react';
 import { useWidget } from '../../hooks/useWidget';
 import { PenTool, X, Check } from 'react-feather';
 import "../../assets/css/widget.css";
+import { Dialog } from '../dialog/dialog';
 
 interface IPropsWidget {
   height: number
@@ -12,8 +13,15 @@ const WidgetNative = ({ height, width }: IPropsWidget) => {
   const canvasRef: any = useRef();
 
   const [enabled, setEnabled] = useState<boolean>(false);
+  const [isSigner, setIsSigner] = useState<boolean>(false);
   
   const widget = useWidget(canvasRef, enabled);
+
+  const handleClose = () => {
+    setIsSigner(false);
+    setEnabled(false);
+    widget.clear();
+  }
 
   useEffect(() => {
     if (enabled) widget.draw();
@@ -45,12 +53,17 @@ const WidgetNative = ({ height, width }: IPropsWidget) => {
       {/* confirmar */}
       {enabled
         ? (
-          <button className={`widget__button signer`}>
+          <button className={`widget__button signer`}
+            onClick={() => setIsSigner(true)}
+          >
             <Check className='widget__icon green'/>
           </button>
         )
         : ''
       }
+      {isSigner
+        ? <Dialog onClose={handleClose} />
+        : null}
     </>
   )
 }
