@@ -8,12 +8,21 @@ interface TPropsViewerLayer {
   url: string
 }
 
+interface TViewport {
+  height: number 
+  width: number
+}
+
 export const ViewerLayer = ({ url }: TPropsViewerLayer) => {
   const canvasRef: any = useRef();
   pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerEntry;
 
   const [pdfRef, setPdfRef] = useState<any>();
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentViewport, setCurrentViewport] = useState<TViewport>({
+    width: 595,
+    height: 842
+  });
 
   const total = useMemo(() => {
     return pdfRef?.numPages || 1;
@@ -21,11 +30,11 @@ export const ViewerLayer = ({ url }: TPropsViewerLayer) => {
 
   const renderPage = useCallback((pageNum: number, pdf = pdfRef) => {
     pdf.getPage(pageNum).then(async (page: any) => {
-      const viewport = page.getViewport({ scale: 1.5 });
+      const viewport = page.getViewport({ scale: 1 });
       const canvas: any = canvasRef.current;
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
-      console.log(viewport)
+      canvas.height = Math.round(viewport.height);
+      canvas.width = Math.round(viewport.width);
+      setCurrentViewport(canvas)
       const renderContext = {
         canvasContext: canvas.getContext('2d'),
         viewport: viewport
@@ -63,10 +72,16 @@ export const ViewerLayer = ({ url }: TPropsViewerLayer) => {
         <ButtonViewer type='left'
           onClick={prevPage}
         />
-        <canvas ref={canvasRef}
-          className='layer'
-        />
-        <Widget/>
+        <div className='layer'>
+          <canvas ref={canvasRef}
+            width={currentViewport?.width}
+            height={currentViewport?.height}
+          />
+          <Widget
+            width={currentViewport?.width}
+            height={currentViewport?.height}
+          />
+        </div>
         <ButtonViewer type='right'
           onClick={nextPage}
         />
