@@ -53,7 +53,7 @@ export const Dialog = ({
       reason: form?.reason,
       location: form?.location,
       positionX: info?.x,
-      positionY: size.height - info.y,
+      positionY: (size.height - info.y) - info.h,
     }
 
     if (typeof onSigner == 'function') onSigner(data);
