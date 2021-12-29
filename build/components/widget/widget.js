@@ -4,7 +4,6 @@ exports.Widget = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const useWidget_1 = require("../../hooks/useWidget");
-require("../../assets/css/widget.css");
 const dialog_1 = require("../dialog/dialog");
 const button_widget_1 = require("./button-widget");
 const WidgetNative = ({ height, width, certInfo, page, onSigner }) => {

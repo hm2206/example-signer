@@ -1,5 +1,4 @@
 import React from 'react';
-import "../../assets/css/widget.css";
 import { TCertInfo } from '../../interfaces/certInfo';
 import { IEventSigner } from '../../interfaces/event-signet';
 interface IPropsWidget {
