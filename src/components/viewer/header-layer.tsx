@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import '../../assets/css/header.css';
-import { X, CheckSquare } from 'react-feather';
+import { X } from 'react-feather';
 
 interface TPropsHeaderLayer {
   total: number

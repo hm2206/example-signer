@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import '../../assets/css/dialog.css';
 import { TCertInfo } from '../../interfaces/certInfo';
 import { IEventSigner } from '../../interfaces/event-signet';

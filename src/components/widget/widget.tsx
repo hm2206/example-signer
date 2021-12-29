@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { useWidget } from '../../hooks/useWidget';
 import "../../assets/css/widget.css";
 import { Dialog } from '../dialog/dialog';

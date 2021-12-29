@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { ChevronLeft, ChevronRight } from 'react-feather';
 
 type ChangeEmunType = "left" | "right";

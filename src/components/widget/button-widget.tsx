@@ -1,3 +1,4 @@
+import React from 'react';
 import { Check, X, PenTool } from 'react-feather';
 
 interface IPropsButtonWidget {

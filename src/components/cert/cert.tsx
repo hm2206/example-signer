@@ -1,4 +1,5 @@
 import '../../assets/css/cert.css';
+import React from 'react';
 import { TCertInfo } from '../../interfaces/certInfo';
 
 interface TPropsCertInfo {

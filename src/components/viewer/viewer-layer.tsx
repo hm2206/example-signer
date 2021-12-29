@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as pdfjsLib from "pdfjs-dist";
 import { ButtonViewer } from './button-viewer';
 import { Widget } from '../widget/widget';
