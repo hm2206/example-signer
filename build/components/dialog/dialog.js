@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Dialog = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
-require("../../assets/css/dialog.css");
 const cert_1 = require("../cert/cert");
 const Dialog = ({ onClose, onSigner, certInfo, size, isVisibled, page, info }) => {
     const [form, setForm] = (0, react_1.useState)({

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.HeaderLayer = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
-require("../../assets/css/header.css");
 const react_feather_1 = require("react-feather");
 const HeaderLayer = ({ onPage, onClose, total }) => {
     const [currentPage, setCurrentPage] = (0, react_1.useState)();

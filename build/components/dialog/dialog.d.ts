@@ -1,5 +1,4 @@
 /// <reference types="react" />
-import '../../assets/css/dialog.css';
 import { TCertInfo } from '../../interfaces/certInfo';
 import { IEventSigner } from '../../interfaces/event-signet';
 import { IRectangle } from '../../interfaces/rectangle';
