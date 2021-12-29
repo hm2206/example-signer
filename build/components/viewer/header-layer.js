@@ -1,11 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.HeaderLayer = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const react_1 = require("react");
-const react_feather_1 = require("react-feather");
-const HeaderLayer = ({ onPage, onClose, total }) => {
-    const [currentPage, setCurrentPage] = (0, react_1.useState)();
+import React, { useState } from 'react';
+import { X } from 'react-feather';
+export const HeaderLayer = ({ onPage, onClose, total }) => {
+    const [currentPage, setCurrentPage] = useState();
     const handlePage = (value) => {
         if (!value.length) {
             onPage(1);
@@ -17,6 +13,12 @@ const HeaderLayer = ({ onPage, onClose, total }) => {
             setCurrentPage(currentPage);
         }
     };
-    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: 'viewer__header' }, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'header__content' }, { children: [(0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'header__left' }, { children: [(0, jsx_runtime_1.jsx)("input", { type: "text", onChange: ({ target }) => handlePage(target.value), className: 'header__search', placeholder: 'P\u00E1g', value: currentPage || '' }, void 0), " / ", total] }), void 0), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "header__right" }, { children: (0, jsx_runtime_1.jsx)(react_feather_1.X, { className: 'cursor__pointer', onClick: onClose }, void 0) }), void 0)] }), void 0) }), void 0));
+    return (React.createElement("div", { className: 'viewer__header' },
+        React.createElement("div", { className: 'header__content' },
+            React.createElement("div", { className: 'header__left' },
+                React.createElement("input", { type: "text", onChange: ({ target }) => handlePage(target.value), className: 'header__search', placeholder: 'P\u00E1g', value: currentPage || '' }),
+                " / ",
+                total),
+            React.createElement("div", { className: "header__right" },
+                React.createElement(X, { className: 'cursor__pointer', onClick: onClose })))));
 };
-exports.HeaderLayer = HeaderLayer;

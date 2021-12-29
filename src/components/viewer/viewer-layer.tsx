@@ -7,14 +7,14 @@ import { TCertInfo } from '../../interfaces/certInfo';
 import { ErrorLayer } from './error-layer';
 import { IEventSigner } from '../../interfaces/event-signet';
 
-interface TPropsViewerLayer {
+export interface TPropsViewerLayer {
   file: File
   onClose?: () => void
   certInfo: TCertInfo
   onSigner: (data: IEventSigner) => void | any
 }
 
-interface TViewport {
+export interface TViewport {
   height: number 
   width: number
 }

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { IRectangle } from "../interfaces/rectangle";
 
-interface IPropsWidget {
+export interface IPropsWidget {
   current: any
 }
 

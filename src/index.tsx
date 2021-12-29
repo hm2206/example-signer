@@ -1,13 +1,15 @@
-import { ViewerLayer } from './components/viewer/viewer-layer';
+import { ViewerLayer as _ViewerLayer } from './components/viewer/viewer-layer';
+import { useWidget as _useWidget } from './hooks/useWidget';
 import { TCertInfo } from './interfaces/certInfo';
 import { IEventSigner } from './interfaces/event-signet';
 import { IRectangle } from './interfaces/rectangle';
-import { useWidget } from './hooks/useWidget';
 
-export {
-  ViewerLayer,
-  type TCertInfo,
-  type IEventSigner,
-  type IRectangle,
-  useWidget,
+export const ViewerLayer = _ViewerLayer;
+
+export const useWidgit = _useWidget;
+
+export type {
+  TCertInfo,
+  IEventSigner,
+  IRectangle,
 }

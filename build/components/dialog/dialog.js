@@ -1,11 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Dialog = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const react_1 = require("react");
-const cert_1 = require("../cert/cert");
-const Dialog = ({ onClose, onSigner, certInfo, size, isVisibled, page, info }) => {
-    const [form, setForm] = (0, react_1.useState)({
+import React, { useState } from 'react';
+import { Cert } from '../cert/cert';
+export const Dialog = ({ onClose, onSigner, certInfo, size, isVisibled, page, info }) => {
+    const [form, setForm] = useState({
         reason: "Yo Soy el firmante",
         location: "PE/PCL"
     });
@@ -14,17 +10,40 @@ const Dialog = ({ onClose, onSigner, certInfo, size, isVisibled, page, info }) =
             isVisibled,
             certId: certInfo.id,
             page,
-            reason: form === null || form === void 0 ? void 0 : form.reason,
-            location: form === null || form === void 0 ? void 0 : form.location,
-            positionX: info === null || info === void 0 ? void 0 : info.x,
+            reason: form?.reason,
+            location: form?.location,
+            positionX: info?.x,
             positionY: (size.height - info.y) - info.h,
         };
         if (typeof onSigner == 'function')
             onSigner(data);
     };
     const handleForm = ({ name, value }) => {
-        setForm(prev => (Object.assign(Object.assign({}, prev), { [name]: value })));
+        setForm(prev => ({
+            ...prev,
+            [name]: value
+        }));
     };
-    return ((0, jsx_runtime_1.jsx)("div", Object.assign({ className: 'dialog__content' }, { children: (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: 'dialog__card' }, { children: [(0, jsx_runtime_1.jsx)("div", Object.assign({ className: "dialog__header" }, { children: "Informaci\u00F3n del Firmante" }), void 0), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "dialog__body" }, { children: [(0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "dialog__group" }, { children: [(0, jsx_runtime_1.jsx)("label", { children: "Motivo" }, void 0), (0, jsx_runtime_1.jsx)("input", { type: "text", name: "reason", onChange: (e) => handleForm(e.target), className: 'dialog__input', value: (form === null || form === void 0 ? void 0 : form.reason) || '' }, void 0)] }), void 0), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "dialog__group" }, { children: [(0, jsx_runtime_1.jsx)("label", { children: "Locaci\u00F3n" }, void 0), (0, jsx_runtime_1.jsx)("input", { type: "text", name: "location", onChange: (e) => handleForm(e.target), className: 'dialog__input', value: (form === null || form === void 0 ? void 0 : form.location) || '' }, void 0)] }), void 0), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "dialog__group" }, { children: [(0, jsx_runtime_1.jsx)("label", { children: "Dimensi\u00F3n" }, void 0), (0, jsx_runtime_1.jsx)("input", { type: "text", disabled: true, readOnly: true, value: `${size.width}x${size.height}`, className: 'dialog__input' }, void 0)] }), void 0), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "dialog__group" }, { children: (0, jsx_runtime_1.jsxs)("label", { children: ["Firmar ", isVisibled ? 'Visible' : 'Invisible'] }, void 0) }), void 0)] }), void 0), (0, jsx_runtime_1.jsx)("div", Object.assign({ className: "dialog__cert" }, { children: (0, jsx_runtime_1.jsx)(cert_1.Cert, { reason: (form === null || form === void 0 ? void 0 : form.reason) || '', certInfo: certInfo }, void 0) }), void 0), (0, jsx_runtime_1.jsxs)("div", Object.assign({ className: "dialog__footer" }, { children: [(0, jsx_runtime_1.jsx)("button", Object.assign({ onClick: onClose, className: 'dialog__button red' }, { children: "Cancelar" }), void 0), (0, jsx_runtime_1.jsx)("button", Object.assign({ onClick: handleSigner, className: 'dialog__button primary' }, { children: "Firmar" }), void 0)] }), void 0)] }), void 0) }), void 0));
+    return (React.createElement("div", { className: 'dialog__content' },
+        React.createElement("div", { className: 'dialog__card' },
+            React.createElement("div", { className: "dialog__header" }, "Informaci\u00F3n del Firmante"),
+            React.createElement("div", { className: "dialog__body" },
+                React.createElement("div", { className: "dialog__group" },
+                    React.createElement("label", null, "Motivo"),
+                    React.createElement("input", { type: "text", name: "reason", onChange: (e) => handleForm(e.target), className: 'dialog__input', value: form?.reason || '' })),
+                React.createElement("div", { className: "dialog__group" },
+                    React.createElement("label", null, "Locaci\u00F3n"),
+                    React.createElement("input", { type: "text", name: "location", onChange: (e) => handleForm(e.target), className: 'dialog__input', value: form?.location || '' })),
+                React.createElement("div", { className: "dialog__group" },
+                    React.createElement("label", null, "Dimensi\u00F3n"),
+                    React.createElement("input", { type: "text", disabled: true, readOnly: true, value: `${size.width}x${size.height}`, className: 'dialog__input' })),
+                React.createElement("div", { className: "dialog__group" },
+                    React.createElement("label", null,
+                        "Firmar ",
+                        isVisibled ? 'Visible' : 'Invisible'))),
+            React.createElement("div", { className: "dialog__cert" },
+                React.createElement(Cert, { reason: form?.reason || '', certInfo: certInfo })),
+            React.createElement("div", { className: "dialog__footer" },
+                React.createElement("button", { onClick: onClose, className: 'dialog__button red' }, "Cancelar"),
+                React.createElement("button", { onClick: handleSigner, className: 'dialog__button primary' }, "Firmar")))));
 };
-exports.Dialog = Dialog;

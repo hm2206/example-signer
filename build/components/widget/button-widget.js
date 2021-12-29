@@ -1,11 +1,15 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ButtonWidget = void 0;
-const jsx_runtime_1 = require("react/jsx-runtime");
-const react_feather_1 = require("react-feather");
-const ButtonWidget = ({ enabled, onEnabled, onSigner, onSignerInvisibled, onCancel }) => {
+import React from 'react';
+import { Check, X, PenTool } from 'react-feather';
+export const ButtonWidget = ({ enabled, onEnabled, onSigner, onSignerInvisibled, onCancel }) => {
     if (enabled)
-        return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("button", Object.assign({ className: `widget__button red`, onClick: onCancel }, { children: (0, jsx_runtime_1.jsx)(react_feather_1.X, { className: 'widget__icon red' }, void 0) }), void 0), (0, jsx_runtime_1.jsx)("button", Object.assign({ className: `widget__button signer`, onClick: onSigner }, { children: (0, jsx_runtime_1.jsx)(react_feather_1.Check, { className: 'widget__icon' }, void 0) }), void 0)] }, void 0));
-    return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("button", Object.assign({ className: `widget__button`, onClick: onEnabled }, { children: (0, jsx_runtime_1.jsx)(react_feather_1.PenTool, { className: 'widget__icon' }, void 0) }), void 0), (0, jsx_runtime_1.jsx)("button", Object.assign({ className: `widget__button signer`, onClick: onSignerInvisibled }, { children: (0, jsx_runtime_1.jsx)(react_feather_1.Check, { className: 'widget__icon' }, void 0) }), void 0)] }, void 0));
+        return (React.createElement(React.Fragment, null,
+            React.createElement("button", { className: `widget__button red`, onClick: onCancel },
+                React.createElement(X, { className: 'widget__icon red' })),
+            React.createElement("button", { className: `widget__button signer`, onClick: onSigner },
+                React.createElement(Check, { className: 'widget__icon' }))));
+    return (React.createElement(React.Fragment, null,
+        React.createElement("button", { className: `widget__button`, onClick: onEnabled },
+            React.createElement(PenTool, { className: 'widget__icon' })),
+        React.createElement("button", { className: `widget__button signer`, onClick: onSignerInvisibled },
+            React.createElement(Check, { className: 'widget__icon' }))));
 };
-exports.ButtonWidget = ButtonWidget;

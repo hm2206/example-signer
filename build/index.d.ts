@@ -1,6 +1,15 @@
-import { ViewerLayer } from './components/viewer/viewer-layer';
+/// <reference types="react" />
 import { TCertInfo } from './interfaces/certInfo';
 import { IEventSigner } from './interfaces/event-signet';
 import { IRectangle } from './interfaces/rectangle';
-import { useWidget } from './hooks/useWidget';
-export { ViewerLayer, type TCertInfo, type IEventSigner, type IRectangle, useWidget, };
+export declare const ViewerLayer: ({ file, onClose, onSigner, certInfo }: import("./components/viewer/viewer-layer").TPropsViewerLayer) => JSX.Element;
+export declare const useWidgit: (canvas: import("./hooks/useWidget").IPropsWidget, active?: boolean) => {
+    infoPosition: IRectangle;
+    draw: () => void;
+    clear: () => void;
+    handleMouseDown: (e: any) => void;
+    handleMouseMove: (e: any) => void;
+    handleMouseUp: (e: any, isRecord?: boolean | undefined) => void;
+    handleMouseOut: (e: any) => void;
+};
+export type { TCertInfo, IEventSigner, IRectangle, };

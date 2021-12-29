@@ -1,8 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.useWidget = void 0;
-const react_1 = require("react");
-const useWidget = (canvas, active = false) => {
+import { useEffect } from "react";
+export const useWidget = (canvas, active = false) => {
     let isDown = false;
     let dragTarget = null;
     let startX = null;
@@ -62,10 +59,10 @@ const useWidget = (canvas, active = false) => {
     };
     const handleMouseUp = (e, isRecord) => {
         if (!isRecord) {
-            infoPosition.x = dragTarget === null || dragTarget === void 0 ? void 0 : dragTarget.x;
-            infoPosition.y = dragTarget === null || dragTarget === void 0 ? void 0 : dragTarget.y;
-            infoPosition.h = dragTarget === null || dragTarget === void 0 ? void 0 : dragTarget.h;
-            infoPosition.w = dragTarget === null || dragTarget === void 0 ? void 0 : dragTarget.w;
+            infoPosition.x = dragTarget?.x;
+            infoPosition.y = dragTarget?.y;
+            infoPosition.h = dragTarget?.h;
+            infoPosition.w = dragTarget?.w;
         }
         dragTarget = null;
         isDown = false;
@@ -73,8 +70,8 @@ const useWidget = (canvas, active = false) => {
     const handleMouseOut = (e) => {
         handleMouseUp(e, true);
     };
-    (0, react_1.useEffect)(() => {
-        if (canvas === null || canvas === void 0 ? void 0 : canvas.current)
+    useEffect(() => {
+        if (canvas?.current)
             initilize();
     }, [canvas]);
     return {
@@ -87,4 +84,3 @@ const useWidget = (canvas, active = false) => {
         handleMouseOut
     };
 };
-exports.useWidget = useWidget;

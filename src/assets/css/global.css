@@ -17,6 +17,8 @@
   min-height: 100%;
   background: #37474f;
   position: fixed;
+  top: 0px;
+  left: 0px;
   display: flex;
   flex-direction: column;
 }
