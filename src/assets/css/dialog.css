@@ -79,20 +79,26 @@
   font-weight: bold;
 }
 
-@media (min-width: 1300px) {
-  .dialog__card {
-    width: 30%;
-  }
-}
-
-@media (max-width: 1010px) {
-  .dialog__card {
-    width: 65%;
-  }
-}
-
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .dialog__card {
     width: 85%;
+  }
+}
+
+@media (min-width: 768px) {
+  .dialog__card {
+    width: 55%;
+  }
+}
+
+@media (min-width: 992px) {
+  .dialog__card {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .dialog__card {
+    width: 35%;
   }
 }

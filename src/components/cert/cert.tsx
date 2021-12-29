@@ -1,6 +1,12 @@
 import '../../assets/css/cert.css';
+import { TCertInfo } from '../../interfaces/certInfo';
 
-export const Cert = () => {
+interface TPropsCertInfo {
+  certInfo: TCertInfo
+  reason: string
+}
+
+export const Cert = ({ certInfo, reason }: TPropsCertInfo) => {
   return (
     <div className='cert__content'>
       <div className="cert__image">
@@ -9,12 +15,12 @@ export const Cert = () => {
         />
       </div>
       <div className="cert__info">
-        <b>00fca689</b>
+        <b>{certInfo?.serialNumber}</b>
         <div className='info__title'>
-          Universidad Nacional Intercultural de la Amazonia
+          {certInfo?.displayTitle}
         </div>
         <div>{"<Fecha de Firma>"}</div>
-        <div> Yo soy el firmante</div>
+        <div>{reason}</div>
       </div>
     </div>
   )

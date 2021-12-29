@@ -4,10 +4,13 @@ import * as pdfjsWorkerEntry from "pdfjs-dist/build/pdf.worker.entry";
 import { ButtonViewer } from './button-viewer';
 import { Widget } from '../widget/widget';
 import { HeaderLayer } from './header-layer';
+import { TCertInfo } from '../../interfaces/certInfo';
+import { ErrorLayer } from './error-layer';
 
 interface TPropsViewerLayer {
-  url: string
+  file: File
   onClose?: () => void
+  certInfo: TCertInfo
 }
 
 interface TViewport {
@@ -15,10 +18,11 @@ interface TViewport {
   width: number
 }
 
-export const ViewerLayer = ({ url, onClose }: TPropsViewerLayer) => {
+export const ViewerLayer = ({ file, onClose, certInfo }: TPropsViewerLayer) => {
   const canvasRef: any = useRef();
   pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerEntry;
 
+  const [isError, setIsError] = useState<boolean>(true);
   const [pdfRef, setPdfRef] = useState<any>();
   const [currentPage, setCurrentPage] = useState<number>(1);
 
@@ -48,10 +52,12 @@ export const ViewerLayer = ({ url, onClose }: TPropsViewerLayer) => {
   }, [pdfRef]);
 
   const handlePdf = () => {
+    const url = URL.createObjectURL(file);
+    setIsError(false);
     const loadingTask = pdfjsLib.getDocument(url);
     loadingTask.promise.then((loadedPdf: any) => {
       setPdfRef(loadedPdf);
-    }).catch(err => console.log(err));
+    }).catch(() => setIsError(true));
   }
   
   useEffect(() => {
@@ -59,8 +65,8 @@ export const ViewerLayer = ({ url, onClose }: TPropsViewerLayer) => {
   }, [pdfRef, currentPage, renderPage]);
 
   useEffect(() => {
-    if (url) handlePdf();
-  }, [url]);
+    if (file?.name) handlePdf();
+  }, [file?.name]);
 
   const nextPage = () => currentPage < total && setCurrentPage(currentPage + 1);
 
@@ -83,10 +89,18 @@ export const ViewerLayer = ({ url, onClose }: TPropsViewerLayer) => {
               width={currentViewport?.width}
               height={currentViewport?.height}
             />
-            <Widget 
-              width={currentViewport?.width || 0}
-              height={currentViewport?.height || 0}
-            />
+            {
+              isError
+                ? <ErrorLayer
+                    width={currentViewport?.width || 0}
+                    height={currentViewport?.height || 0}
+                  />
+                : <Widget 
+                    certInfo={certInfo}
+                    width={currentViewport?.width || 0}
+                    height={currentViewport?.height || 0}
+                  />
+            }
           </div>
           <ButtonViewer type='right'
             onClick={nextPage}

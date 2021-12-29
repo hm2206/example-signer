@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 
 interface IRectangle {
   x: number
@@ -13,14 +13,15 @@ interface IPropsWidget {
 
 export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
 
-  const boxes: IRectangle[] = [
-    { x: 10, y: 10, w: 150, h: 70 },
-  ]
-
   let isDown: boolean = false;
-  let dragTarget: any = null;
+  let dragTarget: IRectangle | any = null;
   let startX: any = null;
   let startY: any = null;
+  const info: IRectangle = {
+    x: 10, y: 10, w: 150, h: 70
+  }
+
+  const infoPosition: IRectangle = info;
 
   const initilize = () => {
     const canvasEle: any = canvas.current;
@@ -32,7 +33,7 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
   const draw = () => {
     clear();
     if (!active) return; 
-    boxes.map(info => drawFillRect(info));
+    drawFillRect(info);
   }
 
   // clear draw
@@ -45,8 +46,8 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
   }
 
   // draw rectangle with background
-  const drawFillRect = (info: IRectangle) => {
-    const { x, y, w, h } = info;
+  const drawFillRect = (tmpInfo: IRectangle) => {
+    const { x, y, w, h } = tmpInfo;
     const backgroundColor = 'rgba(79, 195, 247, 0.7)';
     const ctx = canvas.current.getContext('2d');
     // dibujar
@@ -58,13 +59,9 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
   // identify the click event in the rectangle
   const hitBox = (x: number, y: number): boolean => {
     let isTarget = false;
-    for (let i = 0; i < boxes.length; i++) {
-      const box = boxes[i];
-      if (x >= box.x && x <= box.x + box.w && y >= box.y && y <= box.y + box.h) {
-        dragTarget = box;
-        isTarget = true;
-        break;
-      }
+    if (x >= info.x && x <= info.x + info.w && y >= info.y && y <= info.y + info.h) {
+      dragTarget = info;
+      isTarget = true;
     }
 
     return isTarget;
@@ -90,13 +87,20 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
     draw();
   }
 
-  const handleMouseUp = (e: any) => { 
+  const handleMouseUp = (e: any, isRecord?: boolean | undefined) => { 
+    if (!isRecord) {
+      infoPosition.x = dragTarget?.x;
+      infoPosition.y = dragTarget?.y;
+      infoPosition.h = dragTarget?.h;
+      infoPosition.w = dragTarget?.w;
+    }
+    // clear target
     dragTarget = null;
     isDown = false;
   }
 
   const handleMouseOut = (e: any) => {
-    handleMouseUp(e);
+    handleMouseUp(e, true);
   }
 
   useEffect(() => {
@@ -104,6 +108,7 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
   }, [canvas]);
 
   return {
+    infoPosition,
     draw,
     clear,
     handleMouseDown,

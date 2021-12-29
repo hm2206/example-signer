@@ -2,14 +2,36 @@ import { useState } from 'react'
 import { ViewerLayer } from './components/viewer/viewer-layer'
 import './assets/css/global.css';
 
+interface IHandleFile {
+  files: FileList
+}
+
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [file, setFile] = useState <File | undefined>();
+
+  const handleFile = ({ files }: IHandleFile) => {
+    if (!files.length) return false;
+    const tmpFile: File = files[0];
+    setFile(tmpFile);
+  } 
 
   return (
     <div className="App">
-      <ViewerLayer
-        // url='https://sis.unia.edu.pe/api_tramite/api/file/?disk=tmp&path=/tramite/YOCXMI4IPS/desarrolloSoftware.pdf'
-        url='https://hansmedina.vercel.app/assets/curriculum.3bc03ee8.pdf'
+      {
+        file?.name ? 
+          <ViewerLayer
+            onClose={() => setFile(undefined)}
+            file={file}
+            certInfo={{ 
+              serialNumber: "20393146857",
+              displayTitle: "Universidad Nacional de Ucayali"
+            }}
+          />
+        : null  
+      }
+      <input type="file"
+        onChange={(e: any) => handleFile(e.target)}
       />
     </div>
   )

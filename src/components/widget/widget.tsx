@@ -3,17 +3,21 @@ import { useWidget } from '../../hooks/useWidget';
 import { PenTool, X, Check } from 'react-feather';
 import "../../assets/css/widget.css";
 import { Dialog } from '../dialog/dialog';
+import { TCertInfo } from '../../interfaces/certInfo';
+import { ButtonWidget } from './button-widget';
 
 interface IPropsWidget {
   height: number
   width: number
+  certInfo: TCertInfo
 }
 
-const WidgetNative = ({ height, width }: IPropsWidget) => {
+const WidgetNative = ({ height, width, certInfo }: IPropsWidget) => {
   const canvasRef: any = useRef();
 
   const [enabled, setEnabled] = useState<boolean>(false);
   const [isSigner, setIsSigner] = useState<boolean>(false);
+  const [isVisibled, setIsVisibled] = useState<boolean>(true);
   
   const widget = useWidget(canvasRef, enabled);
 
@@ -21,6 +25,16 @@ const WidgetNative = ({ height, width }: IPropsWidget) => {
     setIsSigner(false);
     setEnabled(false);
     widget.clear();
+  }
+
+  const handleSigner = () => {
+    setIsVisibled(true)
+    setIsSigner(true)
+  }
+
+  const handleSignerInvisibled = () => {
+    setIsVisibled(false)
+    setIsSigner(true);
   }
 
   useEffect(() => {
@@ -42,27 +56,20 @@ const WidgetNative = ({ height, width }: IPropsWidget) => {
         onMouseMove={widget.handleMouseMove}
         onMouseOut={widget.handleMouseOut}
       />
-      <button className={`widget__button ${enabled ? 'red' : ''}`}
-        onClick={() => setEnabled(prev => !prev)}
-      >
-        {enabled
-          ? <X className='widget__icon red'/> 
-          : <PenTool className='widget__icon' />
-        }
-      </button>
-      {/* confirmar */}
-      {enabled
-        ? (
-          <button className={`widget__button signer`}
-            onClick={() => setIsSigner(true)}
-          >
-            <Check className='widget__icon green'/>
-          </button>
-        )
-        : ''
-      }
+      <ButtonWidget
+        enabled={enabled}
+        onEnabled={() => setEnabled(true)}
+        onSigner={handleSigner}
+        onSignerInvisibled={handleSignerInvisibled}
+        onCancel={() => setEnabled(false)}
+      />
       {isSigner
-        ? <Dialog onClose={handleClose} />
+        ? <Dialog
+            isVisibled={isVisibled}
+            certInfo={certInfo}
+            onClose={handleClose}
+            size={{ height, width }}
+          />
         : null}
     </>
   )

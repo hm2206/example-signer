@@ -13,10 +13,10 @@
 
 .viewer__content {
   box-sizing: content-box;
-  width: auto;
-  min-height: auto;
+  width: 100%;
+  min-height: 100%;
   background: #37474f;
-  position: relative;
+  position: fixed;
   display: flex;
   flex-direction: column;
 }
@@ -76,4 +76,17 @@
   bottom: 0px;
   left: 0px;
   text-align: right;
+}
+
+.error__layer {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  text-align: center;
+  padding-top: 5em;
+  font-weight: bolder;
+  color: #b71c1c;
 }
