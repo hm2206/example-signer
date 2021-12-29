@@ -22,15 +22,12 @@ import { ViewerLayer } from "react-pdf-signer";
 
 ### Props
 
-## | Nombre | Tipo | Parámetros
-
-## | certInfo | TCertInfo | null
-
-## | onClose | void | null
-
-## | onSigner| void | data: IEventSigner
-
-## | file | File | null
+| Nombre   | Tipo      | Parámetros         |
+| -------- | --------- | ------------------ |
+| certInfo | TCertInfo | null               |
+| onClose  | void      | null               |
+| onSigner | void      | data: IEventSigner |
+| file     | File      | null               |
 
 ### Interfaces
 
