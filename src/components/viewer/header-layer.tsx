@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../../assets/css/header.css';
 import { X } from 'react-feather';
 
 interface TPropsHeaderLayer {

@@ -1,7 +1,7 @@
 {
   "name": "react-pdf-signer",
-  "version": "1.0.0",
-  "main": "dist/index.js",
+  "version": "1.0.1",
+  "main": "build/index.js",
   "types": "build/index.d.ts",
   "scripts": {
     "build": "npx tsc -p ."
