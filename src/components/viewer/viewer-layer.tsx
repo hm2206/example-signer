@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState, useCallback, useMemo, FunctionComponent } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import * as pdfjsLib from "pdfjs-dist";
-import * as pdfjsWorkerEntry from "pdfjs-dist/build/pdf.worker.entry";
 import { ButtonViewer } from './button-viewer';
 import { Widget } from '../widget/widget';
 import { HeaderLayer } from './header-layer';
@@ -22,7 +21,7 @@ interface TViewport {
 
 export const ViewerLayer = ({ file, onClose, onSigner, certInfo }: TPropsViewerLayer) => {
   const canvasRef: any = useRef();
-  pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerEntry;
+  pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
   const [isError, setIsError] = useState<boolean>(true);
   const [pdfRef, setPdfRef] = useState<any>();

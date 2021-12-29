@@ -5,13 +5,14 @@ import { Dialog } from '../dialog/dialog';
 import { TCertInfo } from '../../interfaces/certInfo';
 import { ButtonWidget } from './button-widget';
 import { IRectangle } from '../../interfaces/rectangle';
+import { IEventSigner } from '../../interfaces/event-signet';
 
 interface IPropsWidget {
   height: number
   width: number
   certInfo: TCertInfo
   page: number
-  onSigner: () => void | any
+  onSigner: (data: IEventSigner) => void | any
 }
 
 const WidgetNative = ({ height, width, certInfo, page, onSigner }: IPropsWidget) => {
