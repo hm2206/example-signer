@@ -6,11 +6,13 @@ import { Widget } from '../widget/widget';
 import { HeaderLayer } from './header-layer';
 import { TCertInfo } from '../../interfaces/certInfo';
 import { ErrorLayer } from './error-layer';
+import { IEventSigner } from '../../interfaces/event-signet';
 
 interface TPropsViewerLayer {
   file: File
   onClose?: () => void
   certInfo: TCertInfo
+  onSigner: (data: IEventSigner) => void | any
 }
 
 interface TViewport {
@@ -18,7 +20,7 @@ interface TViewport {
   width: number
 }
 
-export const ViewerLayer = ({ file, onClose, certInfo }: TPropsViewerLayer) => {
+export const ViewerLayer = ({ file, onClose, onSigner, certInfo }: TPropsViewerLayer) => {
   const canvasRef: any = useRef();
   pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorkerEntry;
 
@@ -96,6 +98,8 @@ export const ViewerLayer = ({ file, onClose, certInfo }: TPropsViewerLayer) => {
                     height={currentViewport?.height || 0}
                   />
                 : <Widget 
+                    onSigner={onSigner}
+                    page={currentPage}
                     certInfo={certInfo}
                     width={currentViewport?.width || 0}
                     height={currentViewport?.height || 0}

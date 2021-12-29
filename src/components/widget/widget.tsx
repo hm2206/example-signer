@@ -1,25 +1,30 @@
 import { memo, useEffect, useRef, useState } from 'react';
 import { useWidget } from '../../hooks/useWidget';
-import { PenTool, X, Check } from 'react-feather';
 import "../../assets/css/widget.css";
 import { Dialog } from '../dialog/dialog';
 import { TCertInfo } from '../../interfaces/certInfo';
 import { ButtonWidget } from './button-widget';
+import { IRectangle } from '../../interfaces/rectangle';
 
 interface IPropsWidget {
   height: number
   width: number
   certInfo: TCertInfo
+  page: number
+  onSigner: () => void | any
 }
 
-const WidgetNative = ({ height, width, certInfo }: IPropsWidget) => {
+const WidgetNative = ({ height, width, certInfo, page, onSigner }: IPropsWidget) => {
   const canvasRef: any = useRef();
 
   const [enabled, setEnabled] = useState<boolean>(false);
+
+  const widget = useWidget(canvasRef, enabled);
+
   const [isSigner, setIsSigner] = useState<boolean>(false);
   const [isVisibled, setIsVisibled] = useState<boolean>(true);
+  const [currentInfo, setCurrentInfo] = useState<IRectangle>(widget.infoPosition);
   
-  const widget = useWidget(canvasRef, enabled);
 
   const handleClose = () => {
     setIsSigner(false);
@@ -30,11 +35,13 @@ const WidgetNative = ({ height, width, certInfo }: IPropsWidget) => {
   const handleSigner = () => {
     setIsVisibled(true)
     setIsSigner(true)
+    setCurrentInfo(widget.infoPosition);
   }
 
   const handleSignerInvisibled = () => {
     setIsVisibled(false)
     setIsSigner(true);
+    setCurrentInfo(prev => ({ ...prev, x: 0, y: 0 }))
   }
 
   useEffect(() => {
@@ -65,10 +72,13 @@ const WidgetNative = ({ height, width, certInfo }: IPropsWidget) => {
       />
       {isSigner
         ? <Dialog
+            info={currentInfo}
+            page={page}
             isVisibled={isVisibled}
             certInfo={certInfo}
             onClose={handleClose}
             size={{ height, width }}
+            onSigner={onSigner}
           />
         : null}
     </>

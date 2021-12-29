@@ -1,11 +1,5 @@
 import { useEffect } from "react"
-
-interface IRectangle {
-  x: number
-  y: number
-  w: number 
-  h: number
-} 
+import { IRectangle } from "../interfaces/rectangle";
 
 interface IPropsWidget {
   current: any

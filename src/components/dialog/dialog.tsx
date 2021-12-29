@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import '../../assets/css/dialog.css';
 import { TCertInfo } from '../../interfaces/certInfo';
+import { IEventSigner } from '../../interfaces/event-signet';
+import { IRectangle } from '../../interfaces/rectangle';
 import { Cert } from '../cert/cert';
 
 interface TSize {
@@ -10,9 +12,12 @@ interface TSize {
 
 interface TPropsDialog {
   onClose: () => void
+  page: number
   certInfo: TCertInfo
   size: TSize 
   isVisibled: boolean
+  onSigner?: (e: IEventSigner) => void
+  info: IRectangle
 }
 
 interface IForm {
@@ -25,12 +30,34 @@ interface IHandle {
   value: string
 }
 
-export const Dialog = ({ onClose, certInfo , size, isVisibled }: TPropsDialog) => {
+export const Dialog = ({
+  onClose,
+  onSigner,
+  certInfo,
+  size,
+  isVisibled,
+  page,
+  info
+}: TPropsDialog) => {
 
   const [form, setForm] = useState<IForm>({
     reason: "Yo Soy el firmante",
     location: "PE/PCL"
   })
+
+  const handleSigner = () => {
+    const data: IEventSigner = {
+      isVisibled,
+      certId: certInfo.id,
+      page,
+      reason: form?.reason,
+      location: form?.location,
+      positionX: info?.x,
+      positionY: info.y,
+    }
+
+    if (typeof onSigner == 'function') onSigner(data);
+  }
 
   const handleForm = ({ name, value }: IHandle) => {
     setForm(prev => ({
@@ -94,7 +121,9 @@ export const Dialog = ({ onClose, certInfo , size, isVisibled }: TPropsDialog) =
           >
             Cancelar
           </button>
-          <button className='dialog__button primary'>
+          <button onClick={handleSigner}
+            className='dialog__button primary'
+          >
             Firmar
           </button>
         </div>
