@@ -1,6 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { useWidget } from '../../hooks/useWidget';
-import "../../assets/css/widget.css";
 import { Dialog } from '../dialog/dialog';
 import { TCertInfo } from '../../interfaces/certInfo';
 import { ButtonWidget } from './button-widget';
