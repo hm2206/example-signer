@@ -1,13 +1,19 @@
 import { useEffect } from "react";
-export const useWidget = (canvas, active = false) => {
+import { roundTo } from "round-to";
+export const useWidget = (canvas, scale = 1, active = false) => {
     let isDown = false;
     let dragTarget = null;
     let startX = null;
     let startY = null;
     const info = {
-        x: 10, y: 10, w: 150, h: 70
+        x: 10, y: 10, w: roundTo(150 * scale, 2), h: roundTo(70 * scale, 2)
     };
-    const infoPosition = info;
+    let infoPosition = Object.assign({}, {
+        x: info.x,
+        y: info.y,
+        h: roundTo(info.h / scale, 2),
+        w: roundTo(info.w / scale, 2)
+    });
     const initilize = () => {
         const canvasEle = canvas.current;
         canvasEle.width = canvasEle.clientWidth;
@@ -23,13 +29,12 @@ export const useWidget = (canvas, active = false) => {
         const ctx = canvas.current.getContext('2d');
         ctx.clearRect(0, 0, canvas.current.clientWidth, canvas.current.clientHeight);
     };
-    const drawFillRect = (tmpInfo) => {
+    const drawFillRect = (tmpInfo, opacity = 0.5) => {
         const { x, y, w, h } = tmpInfo;
-        const backgroundColor = 'rgba(79, 195, 247, 0.7)';
         const ctx = canvas.current.getContext('2d');
         ctx.beginPath();
-        ctx.fillStyle = backgroundColor;
-        ctx.fillRect(x, y, w, h);
+        ctx.fillStyle = `rgba(79, 195, 247, ${opacity})`;
+        ctx.fillRect(roundTo(x, 2), roundTo(y, 2), roundTo(w, 2), roundTo(h, 2));
     };
     const hitBox = (x, y) => {
         let isTarget = false;
@@ -40,8 +45,8 @@ export const useWidget = (canvas, active = false) => {
         return isTarget;
     };
     const handleMouseDown = (e) => {
-        startX = parseInt(`${e.nativeEvent.offsetX - canvas.current.clientLeft}`);
-        startY = parseInt(`${e.nativeEvent.offsetY - canvas.current.clientTop}`);
+        startX = parseFloat(`${e.nativeEvent.offsetX - canvas.current.clientLeft}`);
+        startY = parseFloat(`${e.nativeEvent.offsetY - canvas.current.clientTop}`);
         isDown = hitBox(startX, startY);
     };
     const handleMouseMove = (e) => {
@@ -57,18 +62,23 @@ export const useWidget = (canvas, active = false) => {
         dragTarget.y += dy;
         draw();
     };
-    const handleMouseUp = (e, isRecord) => {
-        if (!isRecord) {
-            infoPosition.x = dragTarget?.x;
-            infoPosition.y = dragTarget?.y;
-            infoPosition.h = dragTarget?.h;
-            infoPosition.w = dragTarget?.w;
+    const handleMouseUp = (e) => {
+        if (isDown) {
+            drawFillRect(info, 0.7);
+            infoPosition.x = roundTo(info?.x / scale, 2);
+            infoPosition.y = roundTo(info?.y / scale, 2);
+            infoPosition.h = roundTo(info?.h / scale, 2);
+            infoPosition.w = roundTo(info?.w / scale, 2);
+            isDown = false;
+            dragTarget = null;
+            clearInfo();
         }
-        dragTarget = null;
-        isDown = false;
     };
-    const handleMouseOut = (e) => {
-        handleMouseUp(e, true);
+    const clearInfo = () => {
+        info.x = 0;
+        info.y = 0;
+        info.w = 0;
+        info.h = 0;
     };
     useEffect(() => {
         if (canvas?.current)
@@ -81,6 +91,5 @@ export const useWidget = (canvas, active = false) => {
         handleMouseDown,
         handleMouseMove,
         handleMouseUp,
-        handleMouseOut
     };
 };

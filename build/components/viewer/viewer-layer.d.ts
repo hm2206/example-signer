@@ -10,5 +10,6 @@ export interface TPropsViewerLayer {
 export interface TViewport {
     height: number;
     width: number;
+    scale: number;
 }
 export declare const ViewerLayer: ({ file, onClose, onSigner, certInfo }: TPropsViewerLayer) => JSX.Element;

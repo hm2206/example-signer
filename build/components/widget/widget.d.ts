@@ -1,12 +1,14 @@
 import React from 'react';
 import { TCertInfo } from '../../interfaces/certInfo';
-import { IEventSigner } from '../../interfaces/event-signet';
+import { IRectangle } from '../../interfaces/rectangle';
+import { TViewport } from '../viewer/viewer-layer';
 interface IPropsWidget {
-    height: number;
-    width: number;
+    viewport: TViewport;
     certInfo: TCertInfo;
     page: number;
-    onSigner: (data: IEventSigner) => void | any;
+    isVisibled: boolean;
+    onVisibled: (position: IRectangle) => void | any;
+    onRectangle: (position: IRectangle) => void | any;
 }
-export declare const Widget: React.MemoExoticComponent<({ height, width, certInfo, page, onSigner }: IPropsWidget) => JSX.Element>;
+export declare const Widget: React.MemoExoticComponent<({ viewport, onRectangle, onVisibled, isVisibled }: IPropsWidget) => JSX.Element>;
 export {};

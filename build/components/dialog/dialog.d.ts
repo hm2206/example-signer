@@ -1,19 +1,14 @@
 /// <reference types="react" />
 import { TCertInfo } from '../../interfaces/certInfo';
-import { IEventSigner } from '../../interfaces/event-signet';
 import { IRectangle } from '../../interfaces/rectangle';
-interface TSize {
-    height: number;
-    width: number;
-}
+import { TViewport } from '../viewer/viewer-layer';
 interface TPropsDialog {
-    onClose: () => void;
     page: number;
+    viewport: TViewport;
     certInfo: TCertInfo;
-    size: TSize;
+    info: IRectangle | undefined;
+    onSigner: (form: any) => void;
     isVisibled: boolean;
-    onSigner?: (e: IEventSigner) => void;
-    info: IRectangle;
 }
-export declare const Dialog: ({ onClose, onSigner, certInfo, size, isVisibled, page, info }: TPropsDialog) => JSX.Element;
+export declare const Dialog: ({ onSigner, certInfo, page, isVisibled }: TPropsDialog) => JSX.Element;
 export {};

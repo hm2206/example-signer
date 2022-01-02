@@ -1,21 +1,27 @@
 import { useEffect } from "react"
 import { IRectangle } from "../interfaces/rectangle";
+import { roundTo } from "round-to";
 
 export interface IPropsWidget {
   current: any
 }
 
-export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
+export const useWidget = (canvas: IPropsWidget, scale: number = 1, active: boolean = false) => {
 
   let isDown: boolean = false;
   let dragTarget: IRectangle | any = null;
   let startX: any = null;
   let startY: any = null;
   const info: IRectangle = {
-    x: 10, y: 10, w: 150, h: 70
+    x: 10, y: 10, w: roundTo(150 * scale, 2), h: roundTo(70 * scale, 2)
   }
 
-  const infoPosition: IRectangle = info;
+  let infoPosition: IRectangle = Object.assign({}, {
+    x: info.x,
+    y: info.y,
+    h: roundTo(info.h / scale, 2),
+    w: roundTo(info.w / scale, 2)
+  });
 
   const initilize = () => {
     const canvasEle: any = canvas.current;
@@ -26,7 +32,7 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
   // draw rectangle
   const draw = () => {
     clear();
-    if (!active) return; 
+    if (!active) return;
     drawFillRect(info);
   }
 
@@ -40,14 +46,13 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
   }
 
   // draw rectangle with background
-  const drawFillRect = (tmpInfo: IRectangle) => {
+  const drawFillRect = (tmpInfo: IRectangle, opacity: number = 0.5) => {
     const { x, y, w, h } = tmpInfo;
-    const backgroundColor = 'rgba(79, 195, 247, 0.7)';
     const ctx = canvas.current.getContext('2d');
     // dibujar
     ctx.beginPath();
-    ctx.fillStyle = backgroundColor;
-    ctx.fillRect(x, y, w, h);
+    ctx.fillStyle = `rgba(79, 195, 247, ${opacity})`;
+    ctx.fillRect(roundTo(x, 2), roundTo(y, 2), roundTo(w, 2), roundTo(h, 2));
   }
 
   // identify the click event in the rectangle
@@ -62,8 +67,8 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
   }
 
   const handleMouseDown = (e: any) => {
-    startX = parseInt(`${e.nativeEvent.offsetX - canvas.current.clientLeft}`);
-    startY = parseInt(`${e.nativeEvent.offsetY - canvas.current.clientTop}`);
+    startX = parseFloat(`${e.nativeEvent.offsetX - canvas.current.clientLeft}`);
+    startY = parseFloat(`${e.nativeEvent.offsetY - canvas.current.clientTop}`);
     isDown = hitBox(startX, startY);
   }
 
@@ -81,20 +86,24 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
     draw();
   }
 
-  const handleMouseUp = (e: any, isRecord?: boolean | undefined) => { 
-    if (!isRecord) {
-      infoPosition.x = dragTarget?.x;
-      infoPosition.y = dragTarget?.y;
-      infoPosition.h = dragTarget?.h;
-      infoPosition.w = dragTarget?.w;
+  const handleMouseUp = (e: any) => { 
+    if (isDown) {
+      drawFillRect(info, 0.7);
+      infoPosition.x = roundTo(info?.x / scale, 2);
+      infoPosition.y = roundTo(info?.y / scale, 2);
+      infoPosition.h = roundTo(info?.h / scale, 2);
+      infoPosition.w = roundTo(info?.w / scale, 2);
+      isDown = false;
+      dragTarget = null;
+      clearInfo();
     }
-    // clear target
-    dragTarget = null;
-    isDown = false;
   }
 
-  const handleMouseOut = (e: any) => {
-    handleMouseUp(e, true);
+  const clearInfo = () => {
+    info.x = 0;
+    info.y = 0;
+    info.w = 0;
+    info.h = 0;
   }
 
   useEffect(() => {
@@ -108,6 +117,5 @@ export const useWidget = (canvas: IPropsWidget, active: boolean = false) => {
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
-    handleMouseOut
   }
 }

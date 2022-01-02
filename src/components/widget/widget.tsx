@@ -1,86 +1,56 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 import { useWidget } from '../../hooks/useWidget';
-import { Dialog } from '../dialog/dialog';
 import { TCertInfo } from '../../interfaces/certInfo';
 import { ButtonWidget } from './button-widget';
 import { IRectangle } from '../../interfaces/rectangle';
-import { IEventSigner } from '../../interfaces/event-signet';
+import { TViewport } from '../viewer/viewer-layer';
 
 interface IPropsWidget {
-  height: number
-  width: number
+  viewport: TViewport
   certInfo: TCertInfo
   page: number
-  onSigner: (data: IEventSigner) => void | any
+  isVisibled: boolean
+  onVisibled: (position: IRectangle) => void | any 
+  onRectangle: (position: IRectangle) => void | any
 }
 
-const WidgetNative = ({ height, width, certInfo, page, onSigner }: IPropsWidget) => {
+const WidgetNative = ({ viewport, onRectangle, onVisibled, isVisibled }: IPropsWidget) => {
   const canvasRef: any = useRef();
 
-  const [enabled, setEnabled] = useState<boolean>(false);
+  const widget = useWidget(canvasRef, viewport.scale, isVisibled);
 
-  const widget = useWidget(canvasRef, enabled);
-
-  const [isSigner, setIsSigner] = useState<boolean>(false);
-  const [isVisibled, setIsVisibled] = useState<boolean>(true);
-  const [currentInfo, setCurrentInfo] = useState<IRectangle>(widget.infoPosition);
-  
-
-  const handleClose = () => {
-    setIsSigner(false);
-    setEnabled(false);
-    widget.clear();
+  const toogleVisibled = () => {
+    onVisibled(widget.infoPosition);
   }
 
-  const handleSigner = () => {
-    setIsVisibled(true)
-    setIsSigner(true)
-    setCurrentInfo(widget.infoPosition);
-  }
-
-  const handleSignerInvisibled = () => {
-    setIsVisibled(false)
-    setIsSigner(true);
-    setCurrentInfo(prev => ({ ...prev, x: 0, y: 0 }))
+  const handleSigner = (e: any) => {
+    widget.handleMouseUp(e);
+    onRectangle(widget.infoPosition);
   }
 
   useEffect(() => {
-    if (enabled) widget.draw();
-  }, [enabled])
+    if (isVisibled) widget.draw();
+  }, [isVisibled])
 
   useEffect(() => {
-    if (!enabled) widget.clear();
-  }, [enabled]);
+    if (!isVisibled) widget.clear();
+  }, [isVisibled]);
 
   return (
     <>
       <canvas ref={canvasRef}
-        width={width}
-        height={height}
+        width={viewport.width}
+        height={viewport.height}
         className='widget__canvas'
         onMouseDown={widget.handleMouseDown}
-        onMouseUp={widget.handleMouseUp}
+        onMouseUp={handleSigner}
         onMouseMove={widget.handleMouseMove}
-        onMouseOut={widget.handleMouseOut}
       />
       <ButtonWidget
-        enabled={enabled}
-        onEnabled={() => setEnabled(true)}
-        onSigner={handleSigner}
-        onSignerInvisibled={handleSignerInvisibled}
-        onCancel={() => setEnabled(false)}
+        enabled={isVisibled}
+        onEnabled={toogleVisibled}
+        onCancel={toogleVisibled}
       />
-      {isSigner
-        ? <Dialog
-            info={currentInfo}
-            page={page}
-            isVisibled={isVisibled}
-            certInfo={certInfo}
-            onClose={handleClose}
-            size={{ height, width }}
-            onSigner={onSigner}
-          />
-        : null}
     </>
   )
 }

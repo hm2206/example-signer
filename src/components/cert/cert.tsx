@@ -1,16 +1,19 @@
 import React from 'react';
 import { TCertInfo } from '../../interfaces/certInfo';
+import image from '../../../src/image/logo.png';
 
 interface TPropsCertInfo {
+  urlImage?: string
   certInfo: TCertInfo
-  reason: string
+  reason: string,
+  isVisibled: boolean
 }
 
-export const Cert = ({ certInfo, reason }: TPropsCertInfo) => {
+export const Cert = ({ certInfo, reason, urlImage, isVisibled }: TPropsCertInfo) => {
   return (
-    <div className='cert__content'>
+    <div className={`cert__content ${isVisibled ? 'active' : ''}`}>
       <div className="cert__image">
-        <img src="https://firmadigital.unia.edu.pe/file?path=certificate/person_1/image/C6XH4WDRZF.jpg&disk=tmp"
+        <img src={urlImage ? urlImage : image}
           alt="cert"
         />
       </div>

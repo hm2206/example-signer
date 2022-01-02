@@ -3,20 +3,15 @@ import { TCertInfo } from '../../interfaces/certInfo';
 import { IEventSigner } from '../../interfaces/event-signet';
 import { IRectangle } from '../../interfaces/rectangle';
 import { Cert } from '../cert/cert';
-
-interface TSize {
-  height: number
-  width: number
-}
+import { TViewport } from '../viewer/viewer-layer';
 
 interface TPropsDialog {
-  onClose: () => void
   page: number
+  viewport: TViewport
   certInfo: TCertInfo
-  size: TSize 
+  info: IRectangle | undefined
+  onSigner: (form: any) => void
   isVisibled: boolean
-  onSigner?: (e: IEventSigner) => void
-  info: IRectangle
 }
 
 interface IForm {
@@ -30,13 +25,10 @@ interface IHandle {
 }
 
 export const Dialog = ({
-  onClose,
   onSigner,
   certInfo,
-  size,
-  isVisibled,
   page,
-  info
+  isVisibled
 }: TPropsDialog) => {
 
   const [form, setForm] = useState<IForm>({
@@ -44,19 +36,7 @@ export const Dialog = ({
     location: "PE/PCL"
   })
 
-  const handleSigner = () => {
-    const data: IEventSigner = {
-      isVisibled,
-      certId: certInfo.id,
-      page,
-      reason: form?.reason,
-      location: form?.location,
-      positionX: info?.x,
-      positionY: (size.height - info.y) - info.h,
-    }
-
-    if (typeof onSigner == 'function') onSigner(data);
-  }
+ 
 
   const handleForm = ({ name, value }: IHandle) => {
     setForm(prev => ({
@@ -66,66 +46,53 @@ export const Dialog = ({
   }
 
   return (
-    <div className='dialog__content'>
-      <div className='dialog__card'>
-        <div className="dialog__header">
-          Información del Firmante
-        </div>
-        
-        <div className="dialog__body">
-          <div className="dialog__group">
-            <label>Motivo</label>
-            <input type="text"
-              name="reason"
-              onChange={(e: any) => handleForm(e.target)}
-              className='dialog__input'
-              value={form?.reason || ''}
-            />
-          </div>
-
-          <div className="dialog__group">
-            <label>Locación</label>
-            <input type="text"
-              name="location"
-              onChange={(e: any) => handleForm(e.target)}
-              className='dialog__input'
-              value={form?.location || ''}
-            />
-          </div>
-
-          <div className="dialog__group">
-            <label>Dimensión</label>
-            <input type="text"
-              disabled
-              readOnly
-              value={`${size.width}x${size.height}`}
-              className='dialog__input'
-            />
-          </div>
-
-          <div className="dialog__group">
-            <label>Firmar {isVisibled ? 'Visible' : 'Invisible'}</label>
-          </div>
-        </div>
-
-        <div className="dialog__cert">
-          <Cert reason={form?.reason || ''}
-            certInfo={certInfo}
+    <div className='dialog__card'>
+      <div className="dialog__body">
+        <div className="dialog__group">
+          <label>Motivo</label>
+          <input type="text"
+            name="reason"
+            onChange={(e: any) => handleForm(e.target)}
+            className='dialog__input'
+            value={form?.reason || ''}
           />
         </div>
 
-        <div className="dialog__footer">
-          <button onClick={onClose}
-            className='dialog__button red'
-          >
-            Cancelar
-          </button>
-          <button onClick={handleSigner}
-            className='dialog__button primary'
-          >
-            Firmar
-          </button>
+        <div className="dialog__group">
+          <label>Locación</label>
+          <input type="text"
+            name="location"
+            onChange={(e: any) => handleForm(e.target)}
+            className='dialog__input'
+            value={form?.location || ''}
+          />
         </div>
+
+        <div className="dialog__group">
+          <label>Página</label>
+          <input type="text"
+            disabled
+            readOnly
+            value={page || 1}
+            className='dialog__input'
+          />
+        </div>
+      </div>
+
+      <div className="dialog__cert">
+        <Cert reason={form?.reason || ''}
+          isVisibled={isVisibled}
+          certInfo={certInfo}
+          urlImage={certInfo.urlImage}
+        />
+      </div>
+
+      <div className="dialog__footer">
+        <button onClick={() => onSigner(form)}
+          className='dialog__button primary'
+        >
+          Firmar
+        </button>
       </div>
     </div>
   )

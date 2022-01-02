@@ -1,29 +1,3 @@
-.dialog__content {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 999;
-}
-
-.dialog__card {
-  width: 45%;
-  height: auto;
-  background: #fff;
-  margin: auto;
-  margin-top: 2em;
-  border-radius: 0.5em;
-  padding: 0.5em;
-}
-
-.dialog__header {
-  font-size: 13px;
-  font-weight: bolder;
-  text-align: center;
-}
-
 .dialog__cert {
   padding: 0.5em 1em;
 }
@@ -78,28 +52,4 @@
   color: #2196f3;
   border: 1px solid #2196f3;
   font-weight: bold;
-}
-
-@media (max-width: 768px) {
-  .dialog__card {
-    width: 85%;
-  }
-}
-
-@media (min-width: 768px) {
-  .dialog__card {
-    width: 55%;
-  }
-}
-
-@media (min-width: 992px) {
-  .dialog__card {
-    width: 50%;
-  }
-}
-
-@media (min-width: 1200px) {
-  .dialog__card {
-    width: 35%;
-  }
 }

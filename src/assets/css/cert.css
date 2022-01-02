@@ -1,13 +1,18 @@
 .cert__content {
   width: 100%;
   height: auto;
-  background: #e3f2fd;
+  background: #eceff1;
   border-radius: 0.3em;
   padding: 0.5em;
-  border: 1px dashed #2196f3;
+  border: 1px dashed #546e7a;
   font-size: 12px;
   display: flex;
   justify-content: space-between;
+}
+
+.cert__content.active {
+  background: #e3f2fd;
+  border: 1px dashed #2196f3;
 }
 
 .cert__image {

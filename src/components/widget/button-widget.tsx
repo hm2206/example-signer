@@ -4,12 +4,10 @@ import { Check, X, PenTool } from 'react-feather';
 interface IPropsButtonWidget {
   enabled: boolean
   onEnabled: () => void
-  onSigner: () => void
   onCancel: () => void
-  onSignerInvisibled: () => void
 }
 
-export const ButtonWidget = ({ enabled, onEnabled, onSigner, onSignerInvisibled, onCancel }: IPropsButtonWidget) => {
+export const ButtonWidget = ({ enabled, onEnabled, onCancel }: IPropsButtonWidget) => {
 
   if (enabled) return (
     <>
@@ -17,11 +15,6 @@ export const ButtonWidget = ({ enabled, onEnabled, onSigner, onSignerInvisibled,
         onClick={onCancel}
       >
         <X className='widget__icon red'/> 
-      </button>
-      <button className={`widget__button signer`}
-        onClick={onSigner}
-      >
-        <Check className='widget__icon'/>
       </button>
     </>
   )
@@ -32,12 +25,6 @@ export const ButtonWidget = ({ enabled, onEnabled, onSigner, onSignerInvisibled,
         onClick={onEnabled}
       >
         <PenTool className='widget__icon'/>
-      </button>
-
-      <button className={`widget__button signer`}
-        onClick={onSignerInvisibled}
-      >
-        <Check className='widget__icon'/>
       </button>
     </>
   );

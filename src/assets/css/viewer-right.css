@@ -1,0 +1,80 @@
+.viewer__right__content {
+  width: 30%;
+  height: 100%;
+  background: #fff;
+  border-top-left-radius: 0.4em;
+}
+
+.viewer__right__header {
+  font-size: 13px;
+  font-weight: bolder;
+  text-align: center;
+  padding: 1em 0.5em;
+  border-bottom: 1px solid #cfd8dc;
+}
+
+.viewer__right__body {
+  padding: 0.5em;
+  width: 100%;
+  min-height: 100%;
+}
+
+.show-signer {
+  background: #fff;
+  width: 30px;
+  height: 30px;
+  margin: 0px;
+  padding: 0px;
+  padding: 0.3em;
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  display: none;
+  border-bottom-left-radius: 0.5em;
+}
+
+.hidden-signer {
+  background: #fff;
+  width: 30px;
+  height: 30px;
+  margin: 0px;
+  padding: 0px;
+  padding: 0.3em;
+  cursor: pointer;
+  position: absolute;
+  top: 0px;
+  left: -30px;
+  border-bottom-left-radius: 0.5em;
+}
+
+@media (max-width: 1000px) {
+  .viewer__right__content {
+    width: 0px;
+  }
+
+  .viewer__right__content.active {
+    display: block;
+    position: absolute;
+    border-top-left-radius: 0em;
+    top: 0px;
+    right: 0px;
+    width: 300px;
+    box-shadow: -0.5px 0px 5px 0px rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+
+  .viewer__layer {
+    width: 100%;
+  }
+
+  .show-signer {
+    display: block;
+  }
+}
+
+@media (max-width: 500px) {
+  .viewer__right__content.active {
+    width: calc(100% - 30px);
+  }
+}

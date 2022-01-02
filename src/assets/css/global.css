@@ -14,13 +14,14 @@
 .viewer__content {
   box-sizing: content-box;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   background: #37474f;
   position: fixed;
   top: 0px;
   left: 0px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .viewer__header {
@@ -32,20 +33,31 @@
 }
 
 .viewer__body {
-  width: 100%;
   box-sizing: border-box;
   position: relative;
   display: flex;
   justify-content: center;
-  padding: 1em;
+  width: auto;
+  height: 100%;
+  overflow: hidden;
+  justify-content: space-between;
+}
+
+.viewer__layer {
+  width: 80%;
+  height: 100%;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .layer {
-  width: auto;
-  height: auto;
   position: relative;
-  overflow: hidden;
   border: 1.5px dashed #2196f3;
+  overflow: auto;
 }
 
 .viewer__change__page {
@@ -71,13 +83,14 @@
 
 .viewer__footer {
   position: absolute;
-  width: 100%;
+  width: auto;
   height: auto;
   color: white;
   padding: 0.4em;
   bottom: 0px;
-  left: 0px;
+  right: 0px;
   text-align: right;
+  text-shadow: 1px 1px 2px solid #000;
 }
 
 .error__layer {
@@ -91,4 +104,31 @@
   padding-top: 5em;
   font-weight: bolder;
   color: #b71c1c;
+}
+
+.layer::-webkit-scrollbar {
+  -webkit-appearance: none;
+}
+
+.layer::-webkit-scrollbar:vertical {
+  width: 10px;
+  background: #fff;
+}
+
+.layer::-webkit-scrollbar-button:increment,
+.layer::-webkit-scrollbar-button {
+  display: none;
+}
+
+.layer::-webkit-scrollbar:horizontal {
+  height: 10px;
+}
+
+.layer::-webkit-scrollbar-thumb {
+  background-color: #797979;
+  border-radius: 20px;
+}
+
+.layer::-webkit-scrollbar-track {
+  border-radius: 10px;
 }
